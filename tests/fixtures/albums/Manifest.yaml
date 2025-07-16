@@ -1,0 +1,61 @@
+---
+version: 0.1.2
+datetime: "1970-01-01T00:00:00Z"
+width: 250
+include_formats:
+  - jpg
+  - png
+albums:
+  - id: cats
+    name:
+      zh-hans: 猫
+      zh-hant: 貓
+      en: Cat
+  - id: boats
+    name:
+      zh-hans: 船
+      zh-hant: 船
+      en: Boat
+  - id: dogs
+    name:
+      zh-hans: 狗
+      zh-hant: 狗
+      en: Dog
+  - id: airplanes
+    name:
+      zh-hans: 飞机
+      zh-hant: 飛機
+      en: Airplane
+  - id: birds
+    name:
+      zh-hans: 鸟
+      zh-hant: 鳥
+      en: Bird
+  - id: flowers
+    name:
+      zh-hans: 花
+      zh-hant: 花
+      en: Flower
+  - id: coins
+    name:
+      zh-hans: 硬币
+      zh-hant: 硬幣
+      en: Coin
+  - id: watches
+    name:
+      zh-hans: 手表
+      zh-hant: 手錶
+      en: Watch
+  - id: coffees
+    name:
+      zh-hans: 咖啡
+      zh-hant: 咖啡
+      en: Coffee
+  - id: zebras
+    name:
+      zh-hans: 斑马
+      zh-hant: 斑馬
+      en: Zebra
+conflicts:
+  # Cats and dogs conflict
+  - [cats, dogs]

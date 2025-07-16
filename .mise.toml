@@ -1,0 +1,26 @@
+[tasks.setup]
+run = "cargo fetch"
+
+[tasks.dev]
+run = "RUST_LOG=debug cargo run"
+
+[tasks.test]
+run = "cargo test"
+
+[tasks.format]
+run = "cargo fmt"
+
+[tasks.lint]
+run = "cargo clippy"
+
+[tasks.prepare]
+depends = ["format", "lint", "test"]
+
+[tasks.cargo-clean]
+run = "cargo clean"
+
+[tasks.out-clean]
+run = "rm -rf namespace/out"
+
+[tasks.clean]
+depends = ["out-clean", "cargo-clean"]
