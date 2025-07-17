@@ -4,7 +4,7 @@ use crate::{
     models::WorkingMode,
     vars::{
         CAPINDE_API_KEY, CAPINDE_HOST, CAPINDE_NAMESPACE_BASE, CAPINDE_PORT, CAPINDE_WORKING_MODE,
-        MAX_UPLOAD_SIZE,
+        MAX_UPLOAD_SIZE, init_started_at,
     },
 };
 use axum::{
@@ -83,11 +83,15 @@ async fn web_serve(bind: &str) -> Result<()> {
         .route("/status", get(routes::janitor::status))
         .route("/schedule", put(routes::janitor::schedule));
 
+    // Server routes
+    let server_routes = Router::new().route("/info", get(routes::server::info));
+
     let mut app = Router::new()
         .route("/api/generate", post(routes::generate))
         .route("/api/verify", post(routes::verify))
         .nest("/api/provider", provider_routes)
         .nest("/api/janitor", janitor_routes)
+        .nest("/api/server", server_routes)
         .route("/api/healthcheck", get(routes::healthcheck));
 
     app = if is_auth_enabled {
@@ -117,7 +121,9 @@ async fn web_serve(bind: &str) -> Result<()> {
     };
     // 将日志追踪层添加到最后面
     app = app.layer(trace_layer());
-
+    // 初始化启动时间
+    init_started_at();
+    // 输出启动日志
     info!("Starting server at http://{bind}");
     let listener = tokio::net::TcpListener::bind(bind).await?;
     axum::serve(listener, app)

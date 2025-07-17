@@ -1,4 +1,5 @@
-use std::sync::LazyLock;
+use chrono::Utc;
+use std::sync::{LazyLock, OnceLock};
 
 macro_rules! env_config {
     ($name:ident, $env_key:expr, $default:expr) => {
@@ -26,6 +27,13 @@ env_config!(ALBUMS_BASE, "albums");
 env_config!(MAX_TTL_HOURS, "12");
 env_config!(MAX_UPLOAD_SIZE_MB, "300");
 env_config!(API_KEY, "");
+
+pub static STARTED_AT: OnceLock<chrono::DateTime<Utc>> = OnceLock::new();
+pub fn init_started_at() {
+    STARTED_AT
+        .set(Utc::now())
+        .expect("STARTED_AT should only be initialized once");
+}
 
 pub static MAX_TTL_SECS: LazyLock<u64> = LazyLock::new(|| {
     CAPINDE_MAX_TTL_HOURS
