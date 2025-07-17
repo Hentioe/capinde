@@ -1,4 +1,5 @@
 use crate::{captchas, provider::manifest::Manifest};
+use chrono::{DateTime, Utc};
 use serde::Serialize;
 
 #[derive(Debug, Clone, Serialize)]
@@ -10,6 +11,18 @@ impl Default for Success {
     fn default() -> Self {
         Self { ok: true }
     }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct ServerInfo {
+    // 版本号
+    pub version: String,
+    // 启动于
+    pub started_at: Option<DateTime<Utc>>,
+    // 工作模式
+    pub working_mode: &'static str,
+    // 验证队列长度
+    pub verification_queue_length: usize,
 }
 
 #[derive(Debug, Clone, Serialize)]

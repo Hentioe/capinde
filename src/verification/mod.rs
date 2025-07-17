@@ -1,7 +1,7 @@
 mod store;
 
 use log::warn;
-pub use store::{add_cache, cleanup_expired};
+pub use store::{add_cache, cleanup_expired, queue_size};
 
 use crate::models::params::verification::Answer::{self, Caassic, Grid, Image, Index};
 

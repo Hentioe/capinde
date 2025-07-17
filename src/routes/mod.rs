@@ -1,6 +1,7 @@
 pub mod generation;
 pub mod janitor;
 pub mod provider;
+pub mod server;
 mod verification;
 
 pub use generation::generate;

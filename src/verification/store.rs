@@ -50,6 +50,11 @@ impl Cache {
 
         count
     }
+
+    pub async fn queue_size(&self) -> usize {
+        let queue = self.queue.lock().await;
+        queue.len()
+    }
 }
 
 pub async fn cleanup_expired() {
@@ -71,6 +76,10 @@ async fn store() -> RwLockReadGuard<'static, Store> {
 
 async fn cache() -> RwLockReadGuard<'static, Cache> {
     CACHE.read().await
+}
+
+pub async fn queue_size() -> usize {
+    cache().await.queue_size().await
 }
 
 pub async fn add_cache(unique_id: String, answer: Answer, ttl_secs: u64) {
